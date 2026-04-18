@@ -1,5 +1,44 @@
 import { ArrowUpRight } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Link } from "react-router-dom";
+import { ViapulsaDetails } from "./ViapulsaDetails";
+import { TalentvisDetails } from "./TalentvisDetails";
+import { InvestreeDetails } from "./InvestreeDetails";
+
+export const STUDY_CASES = [
+  {
+    id: 1,
+    title: "Viapulsa: Enhance Conversion Process",
+    description: "Redesigning the Viapulsa application to streamline the cellular credit-to-cash conversion flow. We successfully reduced daily support tickets by 50% and surged transactions by 40% within 3 months post-launch.",
+    tags: ["Product Design", "UX Research"],
+    image: "https://framerusercontent.com/images/ZPkeVVkTHwyZdb0roMPwWEZBwfI.png",
+    details: <ViapulsaDetails />
+  },
+  {
+    id: 2,
+    title: "Talentvis Dashboard Redesign",
+    description: "Redesigning the Job Order dashboard for an international recruitment company to improve data intuition and support decision-making.",
+    tags: ["Product Design", "Dashboard Analysis"],
+    image: "https://framerusercontent.com/images/BJZF1L2v6EPZ7C00c2y1UAlvag.png",
+    details: <TalentvisDetails />
+  },
+  {
+    id: 3,
+    title: "Investree Mobile App Redesign",
+    description: "Redesigning the Investree mobile application to streamline registration flows and modernize aesthetics to attract millennials.",
+    tags: ["Mobile App Design", "Fintech"],
+    image: "https://framerusercontent.com/images/VZjXJ6VhKEmIMdHTlkxUTDlkIMI.png",
+    details: <InvestreeDetails />
+  },
+  {
+    id: 4,
+    title: "AI Analytics Tool SaaS",
+    description: "Designing complex data visualizations for an AI-powered SaaS product tailored for marketing professionals.",
+    tags: ["SaaS", "UI/Engineering"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    details: "We built an intuitive dashboard for marketers to analyze AI-generated insights. The interface utilizes advanced charting libraries for complex visualizations and provides real-time data streaming without overwhelming the user."
+  }
+];
 
 export function SelectedStudyCase() {
   return (
@@ -20,43 +59,51 @@ export function SelectedStudyCase() {
           </button>
         </div>
 
-        <div className="group relative block overflow-hidden rounded-3xl bg-[#1A1A1A] text-[#F9FAFB] transition-all hover:ring-4 ring-offset-2 ring-offset-[#F9FAFB] hover:ring-[#A3E635]/80">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            {/* Content Section */}
-            <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center order-2 lg:order-1">
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-[#A3E635] text-[#1A1A1A]">UI/UX Design</span>
-                <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/10 text-gray-300 border border-white/10">Frontend</span>
-              </div>
-              
-              <h3 className="text-2xl md:text-4xl font-bold mb-4">
-                Nova Financial Dashboard
-              </h3>
-              
-              <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-                Redesigning the core financial experience for Nova's 2 million users. 
-                Focusing on data visualization clarity, accessibility, and modern aesthetics 
-                while maintaining robust performance.
-              </p>
+        <div className="flex flex-col gap-12">
+          {STUDY_CASES.map((study, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <div key={study.id} className="group relative block overflow-hidden rounded-3xl bg-[#1A1A1A] text-[#F9FAFB] transition-all hover:ring-4 ring-offset-2 ring-offset-[#F9FAFB] hover:ring-[#A3E635]/80">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:min-h-[400px]">
+                  {/* Content Section */}
+                  <div className={`p-8 md:p-12 lg:p-16 flex flex-col justify-center order-2 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {study.tags.map((tag, i) => (
+                        <span key={i} className={`px-3 py-1 text-xs font-bold ${i === 0 ? 'uppercase tracking-wider rounded-full bg-[#A3E635] text-[#1A1A1A]' : 'font-medium rounded-full bg-white/10 text-gray-300 border border-white/10'}`}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <h3 className="text-2xl md:text-4xl font-bold mb-4">
+                      {study.title}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                      {study.description}
+                    </p>
 
-              <div className="mt-auto pt-8">
-                <button className="inline-flex items-center gap-2 bg-[#F9FAFB] text-[#1A1A1A] px-6 py-3 rounded-full font-semibold hover:bg-[#A3E635] transition-colors group/btn cursor-pointer">
-                  Read Case Study
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
-                </button>
-              </div>
-            </div>
+                    <div className="mt-auto pt-8">
+                      <Link to={`/case-study/${study.id}`} className="inline-flex items-center gap-2 bg-[#F9FAFB] text-[#1A1A1A] px-6 py-3 rounded-full font-semibold hover:bg-[#A3E635] transition-colors group/btn cursor-pointer">
+                        Read Case Study
+                        <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+                      </Link>
+                    </div>
+                  </div>
 
-            {/* Image Section */}
-            <div className="relative h-[300px] lg:h-auto overflow-hidden order-1 lg:order-2">
-              <ImageWithFallback 
-                src="https://images.unsplash.com/photo-1755182334060-1578c6cac201?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwdGVjaCUyMGludGVyZmFjZXxlbnwxfHx8fDE3NzYwNDc2NTd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Fintech Dashboard Design"
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/10" />
-            </div>
-          </div>
+                  {/* Image Section */}
+                  <div className={`relative h-[300px] lg:h-auto overflow-hidden order-1 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                    <ImageWithFallback 
+                      src={study.image}
+                      alt={study.title}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/10" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
