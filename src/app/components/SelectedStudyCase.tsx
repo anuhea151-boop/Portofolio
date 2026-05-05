@@ -42,7 +42,7 @@ export const STUDY_CASES = [
 
 export function SelectedStudyCase() {
   return (
-    <section className="w-full bg-[#F9FAFB] text-[#1A1A1A] py-24 px-6 md:px-12 lg:px-24">
+    <section id="selected-projects" className="w-full bg-[#F9FAFB] text-[#1A1A1A] py-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <div className="max-w-xl">

@@ -21,6 +21,12 @@ import adarsaThumbnail from "../../assets/Adarsa/Adarsa.png";
 import weightlossThumbnail from "../../assets/Weightloss/Weightloss.png";
 import weightlossHero from "../../assets/Weightloss/Thumbnail.png";
 
+// Import locally added thumbnails for Buana
+import buanaThumbnail from "../../assets/Buana/Thumbnail.png";
+import buanaDetail1 from "../../assets/Buana/Appointment - Detail.png";
+import buanaDetail2 from "../../assets/Buana/Appointment - filled.png";
+import buanaDetail3 from "../../assets/Buana/Monitor Kesehatan.png";
+
 interface Project {
   name: string;
   color: string;
@@ -30,6 +36,7 @@ interface Project {
   overview?: string;
   gallery?: string[];
   externalLink?: string;
+  figmaLink?: string;
   platform?: string;
   objectFit?: 'cover' | 'contain';
   objectPosition?: string;
@@ -120,7 +127,16 @@ export function ProjectTicker() {
       externalLink: 'https://rejuvenated-footprint-892822.framer.app/',
       gallery: [weightlossThumbnail]
     },
-    { name: 'Project Five', color: 'bg-pink-100' },
+    { 
+      name: 'Buana', 
+      color: 'bg-sky-100',
+      thumbnail: buanaThumbnail,
+      textColor: 'text-black',
+      hideTitle: true,
+      overview: 'Buana is a comprehensive healthcare application designed for seamless appointment booking and health monitoring. It features an intuitive interface for managing consultations effectively.',
+      gallery: [buanaThumbnail, buanaDetail1, buanaDetail2, buanaDetail3],
+      figmaLink: 'https://www.figma.com/design/5DRvJKgK9EXuSdCYfY6nEh/Buana?node-id=0-1&t=2xMG0kE4GiAJvh2n-1'
+    },
     { name: 'Project Six', color: 'bg-yellow-100' },
   ];
 
@@ -143,7 +159,7 @@ export function ProjectTicker() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12 bg-black/60 backdrop-blur-sm select-none">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setSelectedProject(null)}></div>
           
-          <div className="bg-white relative z-10 w-full max-w-6xl max-h-[95vh] rounded-[32px] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
+          <div className="bg-white relative z-10 w-full max-w-[95vw] xl:max-w-[1400px] max-h-[95vh] rounded-[32px] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
             {/* Premium Header */}
             <div className="px-8 py-8 border-b border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white sticky top-0 z-20">
               <div className="flex flex-col gap-4">
@@ -172,16 +188,29 @@ export function ProjectTicker() {
               </div>
 
               <div className="flex items-center gap-3 w-full md:w-auto">
-                <button 
-                  onClick={() => selectedProject.externalLink && window.open(selectedProject.externalLink, '_blank')}
-                  className={`flex-1 md:flex-none px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10 ${!selectedProject.externalLink ? 'hidden' : ''}`}
-                >
-                  View Live Site <ExternalLink className="w-4 h-4" />
-                </button>
+                {selectedProject.figmaLink && (
+                  <button 
+                    onClick={() => window.open(selectedProject.figmaLink, '_blank')}
+                    className="flex-1 md:flex-none px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10"
+                  >
+                    View Figma <ExternalLink className="w-4 h-4" />
+                  </button>
+                )}
+
+                {selectedProject.externalLink && (
+                  <button 
+                    onClick={() => window.open(selectedProject.externalLink, '_blank')}
+                    className="flex-1 md:flex-none px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10"
+                  >
+                    View Live Site <ExternalLink className="w-4 h-4" />
+                  </button>
+                )}
                 
-                <button className={`flex-1 md:flex-none px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10 ${selectedProject.externalLink ? 'hidden' : ''}`}>
-                  Get in touch
-                </button>
+                {!selectedProject.externalLink && !selectedProject.figmaLink && (
+                  <button className="flex-1 md:flex-none px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10">
+                    Get in touch
+                  </button>
+                )}
                 
                 <button onClick={() => setSelectedProject(null)} className="p-2 ml-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-gray-600 cursor-pointer">
                   <X className="w-5 h-5" />
@@ -190,7 +219,7 @@ export function ProjectTicker() {
             </div>
 
             <div className="p-8 md:p-16 overflow-y-auto selection:bg-[#A3E635] selection:text-black cursor-auto scroll-smooth">
-              <div className="max-w-4xl mx-auto">
+              <div className="max-w-[1200px] mx-auto">
                 <div className="mb-20">
                   <div className="flex items-center justify-between mb-6">
                     <h4 className="text-sm font-bold text-gray-400 uppercase tracking-[0.2em]">Project Overview</h4>
@@ -208,10 +237,10 @@ export function ProjectTicker() {
                 {selectedProject.gallery && selectedProject.gallery.length > 0 && (
                   <div className="flex flex-col gap-12 sm:gap-24">
                     {selectedProject.gallery.map((imgUrl, i) => (
-                      <div key={i} className="group relative">
+                      <div key={i} className="group relative flex justify-center">
                         <div className="absolute -inset-4 bg-gray-50 rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
-                        <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-transform duration-700 hover:scale-[1.01]">
-                          <ImageWithFallback src={imgUrl} alt={`${selectedProject.name} Gallery ${i}`} className="w-full h-auto object-contain block mx-auto" />
+                        <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-transform duration-700 hover:scale-[1.01] inline-block">
+                          <ImageWithFallback src={imgUrl} alt={`${selectedProject.name} Gallery ${i}`} className="max-w-full h-auto object-contain block mx-auto" />
                         </div>
                       </div>
                     ))}
