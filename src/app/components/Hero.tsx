@@ -2,7 +2,6 @@ import { Play, Mail, Linkedin, Instagram, CheckCircle2 } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import miCampaign from "../../assets/Make Influence/Campaign.png";
 
-// Project Snippet Card Component
 function ProjectSnippetCard({ 
   title, 
   category, 
@@ -17,13 +16,16 @@ function ProjectSnippetCard({
   rotation?: string;
 }) {
   return (
-    <div className={`absolute bg-white p-3 rounded-2xl shadow-xl border border-gray-100 flex flex-col gap-3 w-[240px] animate-float ${className}`} style={{ transform: rotation ? `rotate(${rotation})` : 'none' }}>
-      <div className="w-full h-32 rounded-xl overflow-hidden border border-gray-50">
-        <ImageWithFallback src={image} alt={title} className="w-full h-full object-cover" />
+    <div 
+      className={`absolute bg-white p-3 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all flex flex-col gap-3 w-[240px] animate-float group cursor-pointer ${className}`} 
+      style={{ transform: rotation ? `rotate(${rotation})` : 'none' }}
+    >
+      <div className="w-full h-32 rounded-lg overflow-hidden border-2 border-black bg-gray-50">
+        <ImageWithFallback src={image} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
       </div>
       <div className="flex flex-col px-1 pb-1">
-        <h3 className="font-bold text-[15px] text-[#1A1A1A] truncate">{title}</h3>
-        <p className="text-gray-500 text-[13px] font-medium truncate">{category}</p>
+        <h3 className="font-bold text-[16px] text-black truncate">{title}</h3>
+        <p className="text-gray-600 text-[13px] font-bold uppercase tracking-wider truncate">{category}</p>
       </div>
     </div>
   );

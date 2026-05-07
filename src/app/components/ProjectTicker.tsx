@@ -27,6 +27,12 @@ import buanaDetail1 from "../../assets/Buana/Appointment - Detail.png";
 import buanaDetail2 from "../../assets/Buana/Appointment - filled.png";
 import buanaDetail3 from "../../assets/Buana/Monitor Kesehatan.png";
 
+// Import locally added thumbnails for Smart Shopping
+import smartShopThumbnail from "../../assets/SmartShop/thumbnail.png";
+import smartShopGallery2 from "../../assets/SmartShop/gallery2.png";
+import smartShopGallery3 from "../../assets/SmartShop/gallery3.png";
+import smartShopGallery4 from "../../assets/SmartShop/gallery4.png";
+
 interface Project {
   name: string;
   color: string;
@@ -40,6 +46,7 @@ interface Project {
   platform?: string;
   objectFit?: 'cover' | 'contain';
   objectPosition?: string;
+  isMobile?: boolean;
 }
 
 interface TickerRowProps {
@@ -65,12 +72,41 @@ function TickerRow({ projects, direction, onProjectClick }: TickerRowProps) {
           className={`relative min-w-[300px] md:min-w-[400px] h-[165px] md:h-[220px] ${project.color} rounded-[32px] p-8 flex flex-col justify-end transition-transform hover:scale-[0.98] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-gray-100/50 ${project.overview ? 'cursor-pointer' : 'cursor-default'} overflow-hidden group`}
         >
           {project.thumbnail && (
-            <div className="absolute inset-0">
-              <ImageWithFallback 
-                src={project.thumbnail} 
-                alt={project.name} 
-                className={`w-full h-full ${project.objectFit || 'object-cover'} ${project.objectPosition || 'object-top'} transition-transform duration-500 group-hover:scale-105`}
-              />
+            <div className="absolute inset-0 flex items-center justify-center p-2">
+              {project.isMobile ? (
+                /* Mobile Phone Mockup */
+                <div className="relative w-[120px] h-[240px] md:w-[150px] md:h-[300px] bg-[#1A1A1A] rounded-[30px] border-[6px] border-[#333] shadow-2xl overflow-hidden rotate-[-5deg] group-hover:rotate-0 transition-transform duration-500 transform translate-y-8 group-hover:translate-y-4">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#1A1A1A] rounded-b-xl z-10"></div>
+                  <ImageWithFallback 
+                    src={project.thumbnail} 
+                    alt={project.name} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                /* Browser Window Mockup */
+                <div className="relative w-[96%] h-[92%] bg-white rounded-xl border border-gray-200 shadow-2xl overflow-hidden group-hover:scale-[1.02] transition-transform duration-500">
+                  {/* Browser Top Bar */}
+                  <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 border-b border-gray-200">
+                    <div className="flex gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+                    </div>
+                    <div className="flex-1 mx-2 bg-white rounded-md px-3 py-0.5 text-[10px] text-gray-400 font-medium truncate border border-gray-200">
+                      {project.name.toLowerCase().replace(/\s+/g, '')}.com
+                    </div>
+                  </div>
+                  {/* Browser Content */}
+                  <div className="w-full h-[calc(100%-28px)] overflow-hidden">
+                    <ImageWithFallback 
+                      src={project.thumbnail} 
+                      alt={project.name} 
+                      className={`w-full h-full ${project.objectFit || 'object-cover'} ${project.objectPosition || 'object-top'}`}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           )}
           {!project.hideTitle && (
@@ -135,13 +171,26 @@ export function ProjectTicker() {
       hideTitle: true,
       overview: 'Buana is a comprehensive healthcare application designed for seamless appointment booking and health monitoring. It features an intuitive interface for managing consultations effectively.',
       gallery: [buanaThumbnail, buanaDetail1, buanaDetail2, buanaDetail3],
-      figmaLink: 'https://www.figma.com/design/5DRvJKgK9EXuSdCYfY6nEh/Buana?node-id=0-1&t=2xMG0kE4GiAJvh2n-1'
+      figmaLink: 'https://www.figma.com/design/5DRvJKgK9EXuSdCYfY6nEh/Buana?node-id=0-1&t=2xMG0kE4GiAJvh2n-1',
+      platform: 'Mobile App',
+      isMobile: true
     },
     { name: 'Project Six', color: 'bg-yellow-100' },
   ];
 
   const row3: Project[] = [
-    { name: 'Project Seven', color: 'bg-indigo-100' },
+    { 
+      name: 'Smart Shopping', 
+      color: 'bg-orange-50',
+      thumbnail: smartShopThumbnail,
+      textColor: 'text-black',
+      hideTitle: true,
+      overview: 'Smart Shopping is a comprehensive mobile application designed for seamless grocery shopping. It features a clean, user-friendly interface for browsing fresh produce, daily essentials, and exclusive discounts with a focus on ease of use and quick conversion.',
+      platform: 'Mobile App',
+      isMobile: true,
+      figmaLink: 'https://www.figma.com/design/6B0LwI8LnFQkRekIMY41Di/Smartshop?node-id=0-1&t=hhksSQuMbmYaNuTP-1',
+      gallery: [smartShopThumbnail, smartShopGallery2, smartShopGallery3, smartShopGallery4]
+    },
     { name: 'Project Eight', color: 'bg-red-100' },
     { name: 'Project Nine', color: 'bg-gray-200' },
   ];
