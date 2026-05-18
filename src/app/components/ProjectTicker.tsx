@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { X, Heart, Bookmark, Calendar, Mail, Link, ArrowUpRight, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, Mail, Link, ExternalLink, ZoomIn } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import projectThreeThumbnail from "figma:asset/f84678e406d7520865d64412ac8c1088e2b762f0.png";
 
@@ -32,6 +32,28 @@ import smartShopThumbnail from "../../assets/SmartShop/thumbnail.png";
 import smartShopGallery2 from "../../assets/SmartShop/gallery2.png";
 import smartShopGallery3 from "../../assets/SmartShop/gallery3.png";
 import smartShopGallery4 from "../../assets/SmartShop/gallery4.png";
+
+// Project Six — EasyPar mobile (onboarding + cover)
+import easyParOnboarding1 from "../../assets/EasyPar/onboarding-1.png";
+import easyParOnboarding2 from "../../assets/EasyPar/onboarding-2.png";
+import easyParOnboarding3 from "../../assets/EasyPar/onboarding-3.png";
+import easyParCover from "../../assets/EasyPar/cover.png";
+import easyParHomeDefault from "../../assets/EasyPar/home-default.png";
+
+// Project Eight — Sembuline healthcare web dashboard
+import sembulineDashboard1 from "../../assets/Sembuline/dashboard-1.png";
+import sembulineDashboard2 from "../../assets/Sembuline/dashboard-2.png";
+import sembulineRekamMedis from "../../assets/Sembuline/rekam-medis.png";
+import sembulinePembayaranInvoice from "../../assets/Sembuline/pembayaran-invoice.png";
+import sembulinePembayaranList from "../../assets/Sembuline/pembayaran-list.png";
+import sembulineAppointment from "../../assets/Sembuline/appointment-dashboard.png";
+
+// Project Nine — Viapulsa design system (browser preview)
+import viapulsaDesignSystemCover from "../../assets/ViapulsaDesignSystem/cover.png";
+import viapulsaSemanticColors from "../../assets/ViapulsaDesignSystem/semantic-colors.png";
+import viapulsaButtonSpecification from "../../assets/ViapulsaDesignSystem/button-specification.png";
+import viapulsaEmptyStateSpecification from "../../assets/ViapulsaDesignSystem/empty-state-specification.png";
+import viapulsaHeroBanners from "../../assets/ViapulsaDesignSystem/hero-banners.png";
 
 interface Project {
   name: string;
@@ -120,6 +142,21 @@ function TickerRow({ projects, direction, onProjectClick }: TickerRowProps) {
 
 export function ProjectTicker() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lightboxUrl) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxUrl(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [lightboxUrl]);
 
   const row1: Project[] = [
     { 
@@ -175,7 +212,24 @@ export function ProjectTicker() {
       platform: 'Mobile App',
       isMobile: true
     },
-    { name: 'Project Six', color: 'bg-yellow-100' },
+    {
+      name: 'Project Six',
+      color: 'bg-neutral-200',
+      thumbnail: easyParCover,
+      textColor: 'text-black',
+      hideTitle: true,
+      overview:
+        'EasyPar is a platform for booking personal golf coaches.',
+      platform: 'Mobile App',
+      isMobile: true,
+      gallery: [
+        easyParOnboarding1,
+        easyParOnboarding2,
+        easyParOnboarding3,
+        easyParCover,
+        easyParHomeDefault,
+      ],
+    },
   ];
 
   const row3: Project[] = [
@@ -191,8 +245,45 @@ export function ProjectTicker() {
       figmaLink: 'https://www.figma.com/design/6B0LwI8LnFQkRekIMY41Di/Smartshop?node-id=0-1&t=hhksSQuMbmYaNuTP-1',
       gallery: [smartShopThumbnail, smartShopGallery2, smartShopGallery3, smartShopGallery4]
     },
-    { name: 'Project Eight', color: 'bg-red-100' },
-    { name: 'Project Nine', color: 'bg-gray-200' },
+    {
+      name: 'Project Eight',
+      color: 'bg-slate-100',
+      thumbnail: sembulineAppointment,
+      textColor: 'text-black',
+      hideTitle: true,
+      overview:
+        'Sembuline is a healthcare management web dashboard for clinics. This appointment view helps staff search patients, create bookings, and track visits across rooms and doctors with clear status and insurance information.',
+      platform: 'Website',
+      figmaLink:
+        'https://www.figma.com/design/gZMxEgyZRvZJKd5h8NFjMP/Sembuline?node-id=574-18192&t=bzhfozxVhD6NcIyr-1',
+      gallery: [
+        sembulineDashboard1,
+        sembulineRekamMedis,
+        sembulinePembayaranInvoice,
+        sembulinePembayaranList,
+        sembulineDashboard2,
+        sembulineAppointment,
+      ],
+    },
+    {
+      name: 'Viapulsa Design System',
+      color: 'bg-orange-50',
+      thumbnail: viapulsaDesignSystemCover,
+      textColor: 'text-black',
+      hideTitle: true,
+      overview:
+        'Viapulsa UI Kit — semantic color tokens, button and empty-state specifications, and marketing illustrations for a consistent mobile and brand experience.',
+      platform: 'Viapulsa UI Kit',
+      objectFit: 'contain',
+      objectPosition: 'object-center',
+      gallery: [
+        viapulsaDesignSystemCover,
+        viapulsaSemanticColors,
+        viapulsaButtonSpecification,
+        viapulsaEmptyStateSpecification,
+        viapulsaHeroBanners,
+      ],
+    },
   ];
 
   return (
@@ -208,7 +299,7 @@ export function ProjectTicker() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12 bg-black/60 backdrop-blur-sm select-none">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setSelectedProject(null)}></div>
           
-          <div className="bg-white relative z-10 w-full max-w-[95vw] xl:max-w-[1400px] max-h-[95vh] rounded-[32px] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
+          <div className="bg-white relative z-10 w-full max-w-[min(1680px,96vw)] max-h-[95vh] rounded-[32px] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
             {/* Premium Header */}
             <div className="px-8 py-8 border-b border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white sticky top-0 z-20">
               <div className="flex flex-col gap-4">
@@ -255,12 +346,6 @@ export function ProjectTicker() {
                   </button>
                 )}
                 
-                {!selectedProject.externalLink && !selectedProject.figmaLink && (
-                  <button className="flex-1 md:flex-none px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10">
-                    Get in touch
-                  </button>
-                )}
-                
                 <button onClick={() => setSelectedProject(null)} className="p-2 ml-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-gray-600 cursor-pointer">
                   <X className="w-5 h-5" />
                 </button>
@@ -282,19 +367,38 @@ export function ProjectTicker() {
                     {selectedProject.overview || 'Details for this project are coming soon.'}
                   </p>
                 </div>
+              </div>
 
                 {selectedProject.gallery && selectedProject.gallery.length > 0 && (
-                  <div className="flex flex-col gap-12 sm:gap-24">
-                    {selectedProject.gallery.map((imgUrl, i) => (
-                      <div key={i} className="group relative flex justify-center">
-                        <div className="absolute -inset-4 bg-gray-50 rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
-                        <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-transform duration-700 hover:scale-[1.01] inline-block">
-                          <ImageWithFallback src={imgUrl} alt={`${selectedProject.name} Gallery ${i}`} className="max-w-full h-auto object-contain block mx-auto" />
+                  <div className="w-full max-w-[min(1800px,calc(100vw-3rem))] mx-auto px-0 md:px-2">
+                    <p className="text-center text-sm text-gray-500 mb-8 flex items-center justify-center gap-2">
+                      <ZoomIn className="w-4 h-4 shrink-0 opacity-70" aria-hidden />
+                      Click an image to open a larger view
+                    </p>
+                    <div className="flex flex-col gap-12 sm:gap-24">
+                      {selectedProject.gallery.map((imgUrl, i) => (
+                        <div key={i} className="group relative flex justify-center w-full min-w-0">
+                          <div className="absolute -inset-4 bg-gray-50 rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+                          <button
+                            type="button"
+                            className="relative w-full max-w-full rounded-2xl border border-gray-100 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-shadow duration-300 hover:shadow-[0_24px_60px_rgba(0,0,0,0.08)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 cursor-zoom-in text-left"
+                            onClick={() => setLightboxUrl(imgUrl)}
+                            aria-label={`View ${selectedProject.name} image ${i + 1} larger`}
+                          >
+                            <ImageWithFallback
+                              src={imgUrl}
+                              alt={`${selectedProject.name} — screen ${i + 1}`}
+                              className="w-full h-auto max-w-full object-contain block mx-auto"
+                              loading={i > 0 ? "lazy" : "eager"}
+                            />
+                          </button>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
+
+              <div className="max-w-[1200px] mx-auto">
                 
                 <div className="mt-32 pt-20 border-t border-gray-100 text-center pb-20">
                   <h4 className="text-3xl font-black text-gray-900 mb-6">Interested in working together?</h4>
@@ -305,6 +409,32 @@ export function ProjectTicker() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {lightboxUrl && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged image"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/88 p-3 sm:p-6 backdrop-blur-sm"
+          onClick={() => setLightboxUrl(null)}
+        >
+          <button
+            type="button"
+            className="absolute top-4 right-4 z-10 rounded-full bg-white/15 p-3 text-white hover:bg-white/25 transition-colors"
+            onClick={() => setLightboxUrl(null)}
+            aria-label="Close enlarged image"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <img
+            src={lightboxUrl}
+            alt=""
+            className="max-h-[94vh] max-w-[min(1920px,96vw)] w-auto h-auto object-contain select-none"
+            onClick={(e) => e.stopPropagation()}
+            draggable={false}
+          />
         </div>
       )}
     </>
