@@ -69,6 +69,8 @@ interface Project {
   objectFit?: 'cover' | 'contain';
   objectPosition?: string;
   isMobile?: boolean;
+  /** Mobile screenshots: keep gallery width phone-sized, not full bleed */
+  compactGallery?: boolean;
 }
 
 interface TickerRowProps {
@@ -210,7 +212,8 @@ export function ProjectTicker() {
       gallery: [buanaThumbnail, buanaDetail1, buanaDetail2, buanaDetail3],
       figmaLink: 'https://www.figma.com/design/5DRvJKgK9EXuSdCYfY6nEh/Buana?node-id=0-1&t=2xMG0kE4GiAJvh2n-1',
       platform: 'Mobile App',
-      isMobile: true
+      isMobile: true,
+      compactGallery: true,
     },
     {
       name: 'Project Six',
@@ -229,6 +232,7 @@ export function ProjectTicker() {
         easyParCover,
         easyParHomeDefault,
       ],
+      compactGallery: true,
     },
   ];
 
@@ -243,7 +247,8 @@ export function ProjectTicker() {
       platform: 'Mobile App',
       isMobile: true,
       figmaLink: 'https://www.figma.com/design/6B0LwI8LnFQkRekIMY41Di/Smartshop?node-id=0-1&t=hhksSQuMbmYaNuTP-1',
-      gallery: [smartShopThumbnail, smartShopGallery2, smartShopGallery3, smartShopGallery4]
+      gallery: [smartShopThumbnail, smartShopGallery2, smartShopGallery3, smartShopGallery4],
+      compactGallery: true,
     },
     {
       name: 'Project Eight',
@@ -370,12 +375,24 @@ export function ProjectTicker() {
               </div>
 
                 {selectedProject.gallery && selectedProject.gallery.length > 0 && (
-                  <div className="w-full max-w-[min(1800px,calc(100vw-3rem))] mx-auto px-0 md:px-2">
+                  <div
+                    className={
+                      selectedProject.compactGallery
+                        ? 'w-full max-w-[min(420px,92vw)] mx-auto px-2'
+                        : 'w-full max-w-[min(1800px,calc(100vw-3rem))] mx-auto px-0 md:px-2'
+                    }
+                  >
                     <p className="text-center text-sm text-gray-500 mb-8 flex items-center justify-center gap-2">
                       <ZoomIn className="w-4 h-4 shrink-0 opacity-70" aria-hidden />
                       Click an image to open a larger view
                     </p>
-                    <div className="flex flex-col gap-12 sm:gap-24">
+                    <div
+                      className={
+                        selectedProject.compactGallery
+                          ? 'flex flex-col gap-8 sm:gap-14'
+                          : 'flex flex-col gap-12 sm:gap-24'
+                      }
+                    >
                       {selectedProject.gallery.map((imgUrl, i) => (
                         <div key={i} className="group relative flex justify-center w-full min-w-0">
                           <div className="absolute -inset-4 bg-gray-50 rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
