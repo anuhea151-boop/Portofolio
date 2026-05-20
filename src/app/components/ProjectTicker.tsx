@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { X, Mail, Link, ExternalLink, ZoomIn } from "lucide-react";
+import { useContactDialog } from "@/app/components/ContactDialogProvider";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import projectThreeThumbnail from "figma:asset/f84678e406d7520865d64412ac8c1088e2b762f0.png";
 
@@ -143,6 +144,7 @@ function TickerRow({ projects, direction, onProjectClick }: TickerRowProps) {
 }
 
 export function ProjectTicker() {
+  const { openContact } = useContactDialog();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
@@ -419,7 +421,11 @@ export function ProjectTicker() {
                 
                 <div className="mt-32 pt-20 border-t border-gray-100 text-center pb-20">
                   <h4 className="text-3xl font-black text-gray-900 mb-6">Interested in working together?</h4>
-                  <button className="px-10 py-5 bg-black text-white font-black text-lg rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 shadow-xl shadow-black/20">
+                  <button
+                    type="button"
+                    onClick={openContact}
+                    className="px-10 py-5 bg-black text-white font-black text-lg rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 shadow-xl shadow-black/20 cursor-pointer"
+                  >
                     Let's Chat
                   </button>
                 </div>
