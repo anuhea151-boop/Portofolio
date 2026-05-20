@@ -1,6 +1,15 @@
-import { Play, Mail, Linkedin, Instagram, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { Play, Download } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/app/components/ui/dialog';
 import miCampaign from "../../assets/Make Influence/Campaign.png";
+
+const RESUME_PDF_URL = '/arya-mardhani-cv.pdf';
 
 function ProjectSnippetCard({ 
   title, 
@@ -50,6 +59,8 @@ function StatPill({
 }
 
 export function Hero() {
+  const [resumeOpen, setResumeOpen] = useState(false);
+
   return (
     <section className="relative pt-48 pb-32 text-center px-6 overflow-hidden bg-[#F9FAFB]">
       {/* Background Grid & Glow */}
@@ -121,12 +132,44 @@ export function Hero() {
             See Project
           </button>
           
-          <button className="bg-[#1A1A1A] text-white px-10 py-4 rounded-xl font-bold hover:bg-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:-translate-y-1 text-base group">
+          <button
+            type="button"
+            onClick={() => setResumeOpen(true)}
+            className="bg-[#1A1A1A] text-white px-10 py-4 rounded-xl font-bold hover:bg-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:-translate-y-1 text-base group"
+          >
             <Play size={18} className="fill-white group-hover:scale-110 transition-transform" />
             View Resume
           </button>
         </div>
       </div>
+
+      <Dialog open={resumeOpen} onOpenChange={setResumeOpen}>
+        <DialogContent className="flex flex-col gap-0 overflow-hidden p-0 sm:max-w-4xl w-[calc(100%-1.5rem)] max-h-[90vh] bg-white border-gray-200">
+          <DialogHeader className="flex flex-row flex-wrap items-center justify-between gap-3 space-y-0 px-5 py-4 pr-12 border-b border-gray-100 text-left">
+            <DialogTitle className="text-lg font-bold text-[#1A1A1A]">
+              Resume — Arya Mardhani
+            </DialogTitle>
+            <a
+              href={RESUME_PDF_URL}
+              download="Arya_Mardhani_CV.pdf"
+              className="inline-flex items-center gap-2 rounded-full bg-[#A3E635] px-5 py-2.5 text-sm font-bold text-[#1A1A1A] shadow-sm hover:brightness-95 transition-all"
+            >
+              <Download className="size-4 shrink-0" aria-hidden />
+              Download PDF
+            </a>
+          </DialogHeader>
+          <div className="min-h-0 flex-1 bg-gray-50 p-3 sm:p-4">
+            <iframe
+              title="Resume PDF preview"
+              src={RESUME_PDF_URL}
+              className="h-[min(72vh,640px)] w-full rounded-lg border border-gray-200 bg-white shadow-sm"
+            />
+            <p className="mt-3 text-center text-xs text-gray-500">
+              Preview may not appear in some browsers — use Download PDF to open the file.
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

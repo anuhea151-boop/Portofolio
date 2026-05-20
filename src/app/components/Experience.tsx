@@ -1,5 +1,27 @@
 import { Linkedin, Github } from 'lucide-react';
 
+function DribbbleIcon({ size = 24 }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M19.13 5.09C15.22 9.14 10.04 11.88 4.5 12.5" />
+      <path d="M21.17 11.51c-5.51-.61-10.85-2.82-15.18-6.44" />
+      <path d="M20.77 18.18c-1.71-4.04-4.72-7.56-8.56-9.63" />
+    </svg>
+  );
+}
+
 const experiences = [
   {
     company: "PT Synapsis Sinergi Digital",
@@ -57,11 +79,32 @@ export function Experience() {
           strategic digital products that drive growth.
         </p>
         <div className="flex gap-4">
-          <a href="#" className="w-12 h-12 bg-white border border-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-700 hover:border-[#A3E635] hover:text-[#86C22A] transition-colors shadow-sm">
+          <a
+            href="https://www.linkedin.com/in/arya-mardhani/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white border border-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-700 hover:border-[#A3E635] hover:text-[#86C22A] transition-colors shadow-sm"
+            aria-label="LinkedIn"
+          >
             <Linkedin size={24} />
           </a>
-          <a href="#" className="w-12 h-12 bg-white border border-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-700 hover:border-[#A3E635] hover:text-[#86C22A] transition-colors shadow-sm">
+          <a
+            href="https://github.com/anuhea151-boop"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white border border-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-700 hover:border-[#A3E635] hover:text-[#86C22A] transition-colors shadow-sm"
+            aria-label="GitHub"
+          >
             <Github size={24} />
+          </a>
+          <a
+            href="https://dribbble.com/aryaquanta"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white border border-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-700 hover:border-[#A3E635] hover:text-[#86C22A] transition-colors shadow-sm"
+            aria-label="Dribbble"
+          >
+            <DribbbleIcon size={24} />
           </a>
         </div>
       </div>
