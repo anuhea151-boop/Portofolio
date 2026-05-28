@@ -4,8 +4,21 @@ import { Link } from "react-router-dom";
 import { ViapulsaDetails } from "./ViapulsaDetails";
 import { TalentvisDetails } from "./TalentvisDetails";
 import { InvestreeDetails } from "./InvestreeDetails";
+import { FleetHeadUnitDetails } from "./FleetHeadUnitDetails";
+import { TabletMockup } from "./TabletMockup";
+import synapsisHaulingActivity from "../../assets/Synapsis/hauling-activity.png";
 
 export const STUDY_CASES = [
+  {
+    id: 4,
+    title: "Fleet Head Unit Experience",
+    description:
+      "Improving operational workflows through contextual UI, clearer information hierarchy, and activity-based interface states for fleet drivers.",
+    tags: ["Product Design", "Android Tablet"],
+    image: synapsisHaulingActivity,
+    isTablet: true,
+    details: <FleetHeadUnitDetails />,
+  },
   {
     id: 1,
     title: "Viapulsa: Enhance Conversion Process",
@@ -30,14 +43,6 @@ export const STUDY_CASES = [
     image: "https://framerusercontent.com/images/VZjXJ6VhKEmIMdHTlkxUTDlkIMI.png",
     details: <InvestreeDetails />
   },
-  {
-    id: 4,
-    title: "AI Analytics Tool SaaS",
-    description: "Designing complex data visualizations for an AI-powered SaaS product tailored for marketing professionals.",
-    tags: ["SaaS", "UI/Engineering"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    details: "We built an intuitive dashboard for marketers to analyze AI-generated insights. The interface utilizes advanced charting libraries for complex visualizations and provides real-time data streaming without overwhelming the user."
-  }
 ];
 
 export function SelectedStudyCase() {
@@ -92,13 +97,29 @@ export function SelectedStudyCase() {
                   </div>
 
                   {/* Image Section */}
-                  <div className={`relative h-[300px] lg:h-auto overflow-hidden order-1 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                    <ImageWithFallback 
-                      src={study.image}
-                      alt={study.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/10" />
+                  <div
+                    className={`relative order-1 overflow-hidden ${isEven ? "lg:order-2" : "lg:order-1"} ${
+                      study.isTablet
+                        ? "flex min-h-[300px] items-center justify-center bg-gray-200 p-8 md:p-12 lg:min-h-[400px]"
+                        : "h-[300px] lg:h-auto"
+                    }`}
+                  >
+                    {study.isTablet ? (
+                      <TabletMockup
+                        src={study.image}
+                        alt={study.title}
+                        className="w-full transition-transform duration-700 group-hover:scale-[1.02]"
+                      />
+                    ) : (
+                      <>
+                        <ImageWithFallback
+                          src={study.image}
+                          alt={study.title}
+                          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/10" />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { X, Mail, Link, ExternalLink, ZoomIn } from "lucide-react";
 import { useContactDialog } from "@/app/components/ContactDialogProvider";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import projectThreeThumbnail from "figma:asset/f84678e406d7520865d64412ac8c1088e2b762f0.png";
-
 // Import locally added thumbnails for Make Influence
 import miCampaign from "../../assets/Make Influence/Campaign.png";
 import miDashboard from "../../assets/Make Influence/Dashboard.png";

@@ -2,6 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, Phone } from 'lucide-react';
 import { STUDY_CASES } from '../components/SelectedStudyCase';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { TabletMockup } from '../components/TabletMockup';
 
 export function StudyCaseDetail() {
   const { id } = useParams();
@@ -44,11 +45,21 @@ export function StudyCaseDetail() {
 
         {/* Cover Image */}
         <div className="mb-14">
-          <ImageWithFallback 
-            src={studyCase.image}
-            alt={studyCase.title}
-            className="w-full h-auto object-cover rounded-[40px] shadow-sm"
-          />
+          {studyCase.isTablet ? (
+            <div className="flex justify-center rounded-[40px] bg-gray-200 px-6 py-10 md:px-10 md:py-14">
+              <TabletMockup
+                src={studyCase.image}
+                alt={studyCase.title}
+                className="w-full max-w-3xl"
+              />
+            </div>
+          ) : (
+            <ImageWithFallback
+              src={studyCase.image}
+              alt={studyCase.title}
+              className="h-auto w-full rounded-[40px] object-cover shadow-sm"
+            />
+          )}
         </div>
 
         {/* Content Section */}
